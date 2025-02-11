@@ -4,17 +4,20 @@ import Header from "./Components/Header";
 import Sidebar from "./Components/Sidebar";
 import Body from "./Components/Body";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-
+import appStore from "./store/appStore";
+import { Provider } from "react-redux";
 
 const App = () => {
     return (
-        <div className='min-h-screen w-screen'>
-            <Header />
-            <section className="flex">
-                <Sidebar />
-                <Outlet />
-            </section>
-        </div>
+        <Provider store={appStore}>
+            <div className='min-h-screen w-screen'>
+                <Header />
+                <section className="flex">
+                    <Sidebar />
+                    <Outlet />
+                </section>
+            </div>
+        </Provider>
     )
 }
 
