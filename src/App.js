@@ -6,13 +6,15 @@ import Body from "./Components/Body";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import appStore from "./store/appStore";
 import { Provider } from "react-redux";
+import WatchPage from "./Components/Watch/WatchPage";
 
 const App = () => {
+
     return (
         <Provider store={appStore}>
             <div className='min-h-screen w-screen'>
                 <Header />
-                <section className="flex">
+                <section className="w-full flex">
                     <Sidebar />
                     <Outlet />
                 </section>
@@ -29,6 +31,10 @@ const appRouter = createBrowserRouter([
             {
                 path: "/",
                 element: <Body />
+            },
+            {
+                path: "/watch",
+                element: <WatchPage />
             }
         ]
     }
