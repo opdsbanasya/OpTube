@@ -4,12 +4,22 @@ import { FiMenu } from "react-icons/fi";
 import { IoIosSearch } from 'react-icons/io';
 import { PiDotsThreeVertical } from 'react-icons/pi';
 import { FaUserCircle } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { hideSidebar } from '../store/headerSlice';
 
 const Header = () => {
+
+    const dispatch = useDispatch();
+    const handleSidebar = () => {
+        dispatch(hideSidebar());
+    }
+
     return (
         <header className='w-full h-[10vh] flex items-center justify-between gap-2 shadow-lg px-5 pr-10'>
             <div className='w-3/12 flex gap-4'>
-                <FiMenu className='text-xl' />
+                <FiMenu className='text-xl' 
+                    onClick={() =>handleSidebar()}
+                />
                 <img alt="YouTube" src={ytLogo} className='w-28 object-cover'/>
             </div>
             <div className='w-6/12 flex items-center'>

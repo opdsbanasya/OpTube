@@ -1,10 +1,14 @@
 import React from 'react'
 import { SIDEBAR_LIST } from '../utils/constant'
+import { useSelector } from 'react-redux';
 
 const Sidebar = () => {
-  const temp = SIDEBAR_LIST[0];
 
-  return (
+  const { isSidebarDisplay } = useSelector(store => store.header);
+  console.log(isSidebarDisplay);
+  
+
+  return isSidebarDisplay ? (
     <aside className='w-2/12 min-h-screen px-3'>
       {
         SIDEBAR_LIST.map(sidebarElem => (
@@ -23,7 +27,7 @@ const Sidebar = () => {
       }
 
     </aside>
-  )
+  ) : null;
 }
 
 export default Sidebar

@@ -1,11 +1,23 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Video = ({ video }) => {
 
+  const { isSidebarDisplay } = useSelector(store => store.header);
+
+  const navigate = useNavigate();
   const { snippet, statistics } = video;
   const { publishedAt, channelId, title, description, thumbnails, channelTitle, tags, categoryId, defaultLanguage, localized } = snippet;
+
+  const handleWatchNavigate =(video) => {
+    navigate("/watch", {state: video});
+  }
+
   return (
-    <div className='w-[30%] flex flex-col'>
+    <div className={`${!isSidebarDisplay && "w-[22%]"} w-[30%] flex flex-col cursor-pointer`}
+      onClick={() => handleWatchNavigate(video)} 
+    >
       <img className='w-full rounded-md' alt={title} src={thumbnails?.maxres?.url} />
       <section className='flex py-2 gap-4'>
         {/* <img alt={channelTitle} src={''} /> */}
