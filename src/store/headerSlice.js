@@ -6,12 +6,15 @@ const headerSlice = createSlice({
         isSidebarDisplay: true,
     },
     reducers: {
-        hideSidebar: (state, action) => {
+        toggleSidebar: (state, action) => {
             state.isSidebarDisplay = !state.isSidebarDisplay;
-        }
+        },
+        hideSidebar: (state, action) => {
+            state.isSidebarDisplay = false;
+        },
     }
 })
 
-export const { hideSidebar } = headerSlice.actions;
+export const { toggleSidebar, hideSidebar } = headerSlice.actions;
 
 export default headerSlice.reducer;
