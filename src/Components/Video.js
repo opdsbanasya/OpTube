@@ -18,7 +18,7 @@ const Video = ({ video }) => {
     <div className={`${!isSidebarDisplay && "w-[22%]"} w-[30%] flex flex-col cursor-pointer`}
       onClick={() => handleWatchNavigate(video)} 
     >
-      <img className='w-full rounded-md' alt={title} src={thumbnails?.maxres?.url} />
+      <img className='w-full rounded-md' alt={title} src={thumbnails?.maxres?.url || thumbnails?.medium?.url} />
       <section className='flex py-2 gap-4'>
         {/* <img alt={channelTitle} src={''} /> */}
         {/* <div className='w-20 h-12 bg-slate-200 rounded-full'></div> */}
