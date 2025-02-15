@@ -13,7 +13,7 @@ const Sidebar = () => {
       {
         SIDEBAR_LIST.map(sidebarElem => (
           <section key={sidebarElem?.id} className='py-2 border-b-2 border-gray-200'>
-            <h3 className='text-lg font-semibold py-2 px-3'>{sidebarElem?.heading}</h3>
+            <h3 className='text-lg font-semibold px-3'>{sidebarElem?.heading}</h3>
             <section className='space-y-0'>
               {sidebarElem?.children.map(child => (
                 <div key={child?.id} className='flex items-center py-2 px-3 hover:bg-gray-200 gap-3 rounded-lg cursor-pointer'>
