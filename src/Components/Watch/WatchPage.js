@@ -1,15 +1,20 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom'
 import { hideSidebar } from '../../store/headerSlice';
 import { FiThumbsDown, FiThumbsUp } from 'react-icons/fi';
 import { LiaDownloadSolid } from 'react-icons/lia';
 import { PiDotsThreeBold, PiShareFat } from 'react-icons/pi';
+import { toggleExpandDescription } from '../../store/videoSlice';
 
 const WatchPage = () => {
 
+  const { isDescriptionShort } = useSelector(store => store?.videoes);
+  console.log(isDescriptionShort);
+
+
   const { state } = useLocation() || {};
-  console.log(state);
+  // console.log(state);
 
   const dispatch = useDispatch()
 
@@ -20,6 +25,12 @@ const WatchPage = () => {
   const { id, snippet, contentDetails, statistics } = state;
   const { publishedAt, channelId, title, description, channelTitle, tags, } = snippet;
   const { viewCount, likeCount, commentCount } = statistics
+  description.split("\n")
+  // console.log(description); 
+
+  const handleDescription = () => {
+    dispatch(toggleExpandDescription());
+  }
 
   return (
     <section className='w-full min-h-screen flex pl-5 pr-10 gap-8'>
@@ -39,21 +50,29 @@ const WatchPage = () => {
         <div className='w-full h-fit py-5 space-y-5'>
           <h4 className='text-xl font-semibold'>{title}</h4>
           <div className='flex items-center justify-between'>
-            <div className='w-fit flex items-center gap-8'>
+
+            {/* Channel details */}
+            <div className='w-fit flex items-center gap-5'>
               <img src='' alt='c' className='w-[5%]' />
               <h6>{channelTitle}</h6>
-              <p>subcribers</p>
-              <button className='w-[10%]'>Subscribe</button>
+              <p>30 M</p>
+              <button className='px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200'>Subscribe</button>
             </div>
+
+            {/* Button */}
             <div className='flex space-x-5'>
-              <span className='bg-gray-100 px-4 py-2 rounded-full flex items-center justify-center gap-2'><FiThumbsUp />Like<FiThumbsDown /></span>
-              <span className='bg-gray-100 px-4 py-2 rounded-full flex items-center justify-center gap-2'><PiShareFat /> Share</span>
-              <span className='bg-gray-100 px-4 py-2 rounded-full flex items-center justify-center gap-2'><LiaDownloadSolid /> Download</span>
-              <span className='bg-gray-100 px-4 py-2 rounded-full flex items-center justify-center'><PiDotsThreeBold /></span>
+              <span className='bg-gray-100 px-4 py-2 rounded-full flex items-center justify-center gap-2 hover:bg-gray-200 cursor-pointer'><FiThumbsUp />Like<FiThumbsDown /></span>
+              <span className='bg-gray-100 px-4 py-2 rounded-full flex items-center justify-center gap-2 hover:bg-gray-200 cursor-pointer'><PiShareFat /> Share</span>
+              <span className='bg-gray-100 px-4 py-2 rounded-full flex items-center justify-center gap-2 hover:bg-gray-200 cursor-pointer'><LiaDownloadSolid /> Download</span>
+              <span className='bg-gray-100 px-4 py-2 rounded-full flex items-center justify-center hover:bg-gray-200 cursor-pointer'><PiDotsThreeBold /></span>
             </div>
           </div>
-          <div>
-            {description}
+          <div className='bg-gray-200 p-4 rounded-lg'>
+            <p>{viewCount} views</p>
+            {description.split("\n").map((line, index) => (
+              <p className={`${isDescriptionShort && index > 2 && "hidden"} block`} key={index}>{line}</p>
+            ))}
+            <button className='hover:underline' onClick={() => handleDescription()}>See {isDescriptionShort? "more" : "less"}</button>
           </div>
         </div>
         <div></div>
