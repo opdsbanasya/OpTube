@@ -11,15 +11,13 @@ export const useVideoList = () => {
         const data = await fetch(YT_API_LINK);
         const json = await data.json();
 
-        console.log(json);
+        // console.log(json);
 
         dispatch(addVideoes(json.items));
 
     }
 
     useEffect(() => {
-        console.log("fetch: ");
-
         getVideoes();
     }, [])
 }

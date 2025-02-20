@@ -10,7 +10,7 @@ const VideoContainer = () => {
   useVideoList();
 
   const { videoList } = useSelector(store => store?.videoes);
-  console.log(videoList);
+
   if(!videoList) return null;
 
   return (

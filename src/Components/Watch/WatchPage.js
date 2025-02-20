@@ -6,12 +6,11 @@ import { FiThumbsDown, FiThumbsUp } from 'react-icons/fi';
 import { LiaDownloadSolid } from 'react-icons/lia';
 import { PiDotsThreeBold, PiShareFat } from 'react-icons/pi';
 import { toggleExpandDescription } from '../../store/videoSlice';
+import CommentPage from './CommentsPage';
 
 const WatchPage = () => {
 
   const { isDescriptionShort } = useSelector(store => store?.videoes);
-  console.log(isDescriptionShort);
-
 
   const { state } = useLocation() || {};
   // console.log(state);
@@ -75,10 +74,10 @@ const WatchPage = () => {
             <button className='hover:underline' onClick={() => handleDescription()}>See {isDescriptionShort? "more" : "less"}</button>
           </div>
         </div>
-        <div></div>
+        <CommentPage />
       </div>
       <div className='bg-blue-200 w-[30%]'>
-
+            
       </div>
     </section>
   )

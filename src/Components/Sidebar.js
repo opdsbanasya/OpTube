@@ -5,8 +5,6 @@ import { useSelector } from 'react-redux';
 const Sidebar = () => {
 
   const { isSidebarDisplay } = useSelector(store => store.header);
-  console.log(isSidebarDisplay);
-  
 
   return isSidebarDisplay ? (
     <aside className='w-2/12 min-h-screen px-3'>
