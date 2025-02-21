@@ -11,11 +11,7 @@ const CommentPage = ({ videoId }) => {
 
   if (!comment) return;
 
-  console.log(comment);
-
   const { items } = comment;
-  console.log(items);
-
 
   return (
     <div className='min-h-20 px-4 py-2 mb-5 rounded-lg'>

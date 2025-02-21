@@ -9,7 +9,6 @@ const Comment = ({ commentData }) => {
     const [showReplies, setShowReplies] = useState(false);
 
     const { replies } = commentData?.replies ? commentData : {};
-    console.log(replies);
 
     const { topLevelComment, totalReplyCount, canReply } = commentData?.snippet ? commentData.snippet : {};
 
@@ -33,7 +32,7 @@ const Comment = ({ commentData }) => {
                         <MdKeyboardArrowDown className='text-xl' /> 
                         Replies: {totalReplyCount}
                     </p>}
-                    {showReplies && replies && replies?.comments.map(reply => <Comment commentData={reply} />)}
+                    {showReplies && replies && replies?.comments.map(reply => <Comment key={reply.id} commentData={reply} />)}
                 </div>
             </div>
             <PiDotsThreeVerticalBold className='cursor-pointer' />

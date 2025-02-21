@@ -11,8 +11,6 @@ const useComments = (videoId) => {
         const data = await fetch(COMMENTS_API + videoId + "&key="+GOOGLE_API_KEY);
         const json = await data.json();
 
-        console.log(json);
-        
         dispatch(addComments(json))
     }
 
