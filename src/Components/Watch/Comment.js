@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BiDislike, BiLike } from 'react-icons/bi';
 import { FaUserCircle } from 'react-icons/fa';
+import { MdKeyboardArrowDown } from 'react-icons/md';
 import { PiDotsThreeVerticalBold } from 'react-icons/pi';
 
 const Comment = ({ commentData }) => {
 
+    const [showReplies, setShowReplies] = useState(false);
+
     const { replies } = commentData?.replies ? commentData : {};
     console.log(replies);
-    
+
     const { topLevelComment, totalReplyCount, canReply } = commentData?.snippet ? commentData.snippet : {};
 
     const { authorProfileImageUrl, textDisplay, authorDisplayName, likeCount, authorChannelUrl, authorChannelId, publishedAt, updatedAt } = topLevelComment?.snippet ? topLevelComment.snippet : commentData?.snippet;
@@ -20,15 +23,20 @@ const Comment = ({ commentData }) => {
                     <p className='font-semibold text-sm cursor-pointer'>{authorDisplayName}</p>
                     <p className='text-sm'>{textDisplay}</p>
                     <p className='flex items-center gap-3 text-sm'>
-                        <BiLike className='size-7 text-lg hover:bg-gray-200 p-1 cursor-pointer rounded-full' /> 
-                        {likeCount} 
+                        <BiLike className='size-7 text-lg hover:bg-gray-200 p-1 cursor-pointer rounded-full' />
+                        {likeCount}
                         <BiDislike className='size-7 text-lg hover:bg-gray-200 p-1 cursor-pointer rounded-full' />
-                        {totalReplyCount > 0 && <p>Replies: {totalReplyCount}</p>}
                     </p>
-                    {replies && replies?.comments.map(reply => <Comment commentData={reply} />)}
+                    {totalReplyCount > 0 && <p className='flex items-center font-semibold text-blue-600 cursor-pointer'
+                        onClick={()=> setShowReplies(!showReplies)}
+                    >
+                        <MdKeyboardArrowDown className='text-xl' /> 
+                        Replies: {totalReplyCount}
+                    </p>}
+                    {showReplies && replies && replies?.comments.map(reply => <Comment commentData={reply} />)}
                 </div>
             </div>
-            <PiDotsThreeVerticalBold className='cursor-pointer'  />
+            <PiDotsThreeVerticalBold className='cursor-pointer' />
 
         </div>
     )
