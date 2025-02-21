@@ -15,6 +15,7 @@ const WatchPage = () => {
   const { state } = useLocation() || {};
   // console.log(state);
 
+  if(!state) return;
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -41,7 +42,6 @@ const WatchPage = () => {
             src={"https://www.youtube.com/embed/" + id}
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referRerpolicy="strict-origin-when-cross-origin"
             allowFullScreen
             className='w-full h-full rounded-lg'
           ></iframe>
@@ -74,7 +74,7 @@ const WatchPage = () => {
             <button className='hover:underline' onClick={() => handleDescription()}>See {isDescriptionShort? "more" : "less"}</button>
           </div>
         </div>
-        <CommentPage />
+        <CommentPage videoId={id} />
       </div>
       <div className='bg-blue-200 w-[30%]'>
             
