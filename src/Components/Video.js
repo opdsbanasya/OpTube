@@ -7,11 +7,14 @@ const Video = ({ video }) => {
   const { isSidebarDisplay } = useSelector(store => store.header);
 
   const navigate = useNavigate();
-  const { snippet, statistics } = video;
+  const { snippet, statistics, id } = video;
   const { publishedAt, channelId, title, description, thumbnails, channelTitle, tags, categoryId, defaultLanguage, localized } = snippet;
 
+  // console.log(video);
+  
+
   const handleWatchNavigate =(video) => {
-    navigate("/watch", {state: video});
+    navigate("/watch?v="+id, {state: video});
   }
 
   return (
