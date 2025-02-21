@@ -4,8 +4,10 @@ import { FiMenu } from "react-icons/fi";
 import { IoIosSearch } from 'react-icons/io';
 import { PiDotsThreeVertical } from 'react-icons/pi';
 import { FaUserCircle } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleSidebar } from '../store/headerSlice';
+import { YT_SUGGESSIONS_API } from '../utils/constant';
+import { cacheSuggestions } from '../store/searchSlice';
 
 const Header = () => {
 
@@ -15,12 +17,22 @@ const Header = () => {
 
     const dispatch = useDispatch();
 
+    const { search } = useSelector(store => store);
+    // console.log(search);
+
+
     const handleSidebar = () => {
         dispatch(toggleSidebar());
     }
 
     useEffect(() => {
-        const timer = setTimeout(() => getSuggessions(), 200);
+        const timer = setTimeout(() => {
+            if (search[searchQuery]) {
+                setSuggessions(search[searchQuery])
+            } else {
+                getSuggessions()
+            }
+        }, 200);
         return () => {
             clearTimeout(timer);
         }
@@ -28,11 +40,14 @@ const Header = () => {
 
     const getSuggessions = async () => {
         console.log(searchQuery);
-        const data = await fetch("http://suggestqueries.google.com/complete/search?client=youtube&ds=yt&client=firefox&q=" + searchQuery);
+        const data = await fetch(YT_SUGGESSIONS_API + searchQuery);
         const json = await data.json();
 
-        console.log(json);
         setSuggessions(json[1]);
+
+        dispatch(cacheSuggestions({
+            [searchQuery]: json[1]
+        }))
     }
     return (
         <header className='w-full h-[10vh] flex items-center justify-between gap-2 px-5 pr-10'>
@@ -46,8 +61,8 @@ const Header = () => {
                 <div className='w-full flex items-center'>
                     <input type='text' placeholder='Search' className='w-8/12 px-4 py-2  border rounded-l-full outline-none '
                         onChange={(e) => setSearchSQuery(e.target.value)}
-                        onFocus={()=> setShowSuggessions(true)}
-                        onBlur={()=> setShowSuggessions(false)}
+                        onFocus={() => setShowSuggessions(true)}
+                        onBlur={() => setShowSuggessions(false)}
                     />
                     <button className='px-4 py-[11px] text-lg border rounded-r-full outline-none bg-gray-50'><IoIosSearch /></button>
                 </div>
