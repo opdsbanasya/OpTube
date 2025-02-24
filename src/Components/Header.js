@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleSidebar } from '../store/headerSlice';
 import { YT_SUGGESSIONS_API } from '../utils/constant';
 import { cacheSuggestions } from '../store/searchSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
 
@@ -17,7 +18,8 @@ const Header = () => {
 
     const dispatch = useDispatch();
 
-    const { search } = useSelector(store => store);
+    const navigate = useNavigate();
+    const { searchSuggetion } = useSelector(store => store?.search);
     // console.log(search);
 
 
@@ -27,8 +29,8 @@ const Header = () => {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            if (search[searchQuery]) {
-                setSuggessions(search[searchQuery])
+            if (searchSuggetion[searchQuery]) {
+                setSuggessions(searchSuggetion[searchQuery])
             } else {
                 getSuggessions()
             }
@@ -39,7 +41,6 @@ const Header = () => {
     }, [searchQuery])
 
     const getSuggessions = async () => {
-        console.log(searchQuery);
         const data = await fetch(YT_SUGGESSIONS_API + searchQuery);
         const json = await data.json();
 
@@ -49,6 +50,11 @@ const Header = () => {
             [searchQuery]: json[1]
         }))
     }
+
+    const handleSearchPage = () => {
+        navigate("/search?search_query=" + searchQuery, { state: { sQuery: searchQuery } })
+    }
+
     return (
         <header className='w-full h-[10vh] flex items-center justify-between gap-2 px-5 pr-10'>
             <div className='w-3/12 flex gap-4'>
@@ -64,11 +70,21 @@ const Header = () => {
                         onFocus={() => setShowSuggessions(true)}
                         onBlur={() => setShowSuggessions(false)}
                     />
-                    <button className='px-4 py-[11px] text-lg border rounded-r-full outline-none bg-gray-50'><IoIosSearch /></button>
+                    <button onClick={() => handleSearchPage()} className='px-4 py-[11px] text-lg border rounded-r-full outline-none bg-gray-50'><IoIosSearch /></button>
                 </div>
                 {showSuggessions && suggestions.length != 0 && <div className='w-8/12 absolute top-14 z-10 bg-white border border-gray-200 rounded-md'>
                     <ul className=''>
-                        {suggestions.map(sug => <li key={sug} className='flex items-center gap-2 px-4 py-1 hover:bg-gray-100 cursor-default'><IoIosSearch className='text-lg' /> {sug}</li>)}
+                        {suggestions.map(sug => (
+                            <li
+                                onClick={() => {
+                                    setSearchSQuery(sug)
+                                    handleSearchPage()
+                                }}
+                                key={sug} className='flex items-center gap-2 px-4 py-1 hover:bg-gray-100 cursor-default'>
+                                <IoIosSearch className='text-lg' />
+                                {sug}
+                            </li>
+                        ))}
                     </ul>
                 </div>}
             </div>
