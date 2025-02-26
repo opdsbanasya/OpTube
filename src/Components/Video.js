@@ -14,7 +14,7 @@ const Video = ({ video }) => {
   
 
   const handleWatchNavigate =(video) => {
-    navigate("/watch?v="+id, {state: video});
+    navigate("/watch?v="+id, {state: {videoData: video}});
   }
 
   return (
