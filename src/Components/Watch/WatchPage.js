@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom'
 import { hideSidebar } from '../../store/headerSlice';
@@ -7,26 +7,28 @@ import { LiaDownloadSolid } from 'react-icons/lia';
 import { PiDotsThreeBold, PiShareFat } from 'react-icons/pi';
 import { toggleExpandDescription } from '../../store/videoSlice';
 import CommentPage from './CommentsPage';
+import LiveChat from './LiveChat';
 
 const WatchPage = () => {
+
+  const [isLiveChat, setIsLiveChat] = useState(false);
 
   const { isDescriptionShort } = useSelector(store => store?.videoes);
 
   const { state } = useLocation() || {};
   // console.log(state);
 
-  if(!state) return;
+  if (!state) return;
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(hideSidebar());
   })
 
-  const { id, snippet, contentDetails, statistics } = state;
+  const { id, snippet, contentDetails, statistics } = state.videoData;
   const { publishedAt, channelId, title, description, channelTitle, tags, } = snippet;
   const { viewCount, likeCount, commentCount } = statistics
   description.split("\n")
-  // console.log(description); 
 
   const handleDescription = () => {
     dispatch(toggleExpandDescription());
@@ -63,6 +65,9 @@ const WatchPage = () => {
               <span className='bg-gray-100 px-4 py-2 rounded-full flex items-center justify-center gap-2 hover:bg-gray-200 cursor-pointer'><FiThumbsUp />Like<FiThumbsDown /></span>
               <span className='bg-gray-100 px-4 py-2 rounded-full flex items-center justify-center gap-2 hover:bg-gray-200 cursor-pointer'><PiShareFat /> Share</span>
               <span className='bg-gray-100 px-4 py-2 rounded-full flex items-center justify-center gap-2 hover:bg-gray-200 cursor-pointer'><LiaDownloadSolid /> Download</span>
+              <span className='bg-gray-100 px-4 py-2 rounded-full flex items-center justify-center hover:bg-gray-200 cursor-pointer'
+                onClick={()=>setIsLiveChat(!isLiveChat)}
+              >Live Chat</span>
               <span className='bg-gray-100 px-4 py-2 rounded-full flex items-center justify-center hover:bg-gray-200 cursor-pointer'><PiDotsThreeBold /></span>
             </div>
           </div>
@@ -71,13 +76,13 @@ const WatchPage = () => {
             {description.split("\n").map((line, index) => (
               <p className={`${isDescriptionShort && index > 2 && "hidden"} block`} key={index}>{line}</p>
             ))}
-            <button className='hover:underline' onClick={() => handleDescription()}>See {isDescriptionShort? "more" : "less"}</button>
+            <button className='hover:underline' onClick={() => handleDescription()}>See {isDescriptionShort ? "more" : "less"}</button>
           </div>
         </div>
         <CommentPage videoId={id} />
       </div>
-      <div className='bg-blue-200 w-[30%]'>
-            
+      <div className='bg-zinc-50 w-[30%] rounded-lg overflow-hidden'>
+        {isLiveChat && <LiveChat />}
       </div>
     </section>
   )
