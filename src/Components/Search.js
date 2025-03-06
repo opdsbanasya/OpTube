@@ -1,24 +1,26 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import useVideo from '../hooks/useVideo';
 
 const Search = ({ search }) => {
+
+    const navigate = useNavigate();
 
     const videoId = search?.id?.videoId;
     const { title, description, thumbnails, channelTitle } = search?.snippet;
 
-    const { isSidebarDisplay } = useSelector(store => store.header);
+    // const { isSidebarDisplay } = useSelector(store => store.header);
 
-    const navigate = useNavigate();
 
-    // const handleWatchNavigate = (search) => {
-    //     navigate("/watch?v=" + id, { state: search });
-    // }
+    const handleWatchNavigate = (videoId) => {
+        navigate("/watch?v=" + videoId, { state: {videoId: videoId} });
+    }
 
     return (
-        <div className={` w-full flex cursor-pointer gap-5`}>
+        <div className={` w-full flex cursor-pointer gap-5`} onClick={()=> handleWatchNavigate(videoId)}>
             <div className={`w-[40%]  rounded-md`} >
-                <img className={`${videoId ? "w-full  rounded-md" : "w-[40%] rounded-full mx-auto" } `} alt={title} src={thumbnails?.medium?.url} />
+                <img className={`${videoId ? "w-full rounded-md" : "w-[40%] rounded-full mx-auto"} `} alt={title} src={thumbnails?.medium?.url} />
             </div>
             <section className='w-[55%] space-y-2'>
                 <p className='font-semibold'>{title}</p>

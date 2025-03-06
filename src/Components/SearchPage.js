@@ -8,23 +8,20 @@ import { useLocation } from 'react-router-dom';
 const SearchPage = () => {
 
     const {state} = useLocation() || {};
-    console.log(state?.sQuery);
     useSearch(state?.sQuery);
 
     const { searchData } = useSelector(store => store?.search)
 
     const { items } = searchData;
-
-    console.log(items);
-    
+    if(!items) return;
 
     return (
-        <section className='w-fit'>
+        <section className='w-fit mx-auto'>
             <Tags />
             <div className='w-full space-y-5'>
-                {items && items.map(item => (
-                    <Search key={item?.id?.videoId || item?.id?.channelId} search={item}/>
-                ))}
+                {items && items.map(item => {
+                    return (item?.id?.videoId || item?.id?.channelId) && <Search key={item?.id?.videoId || item?.id?.channelId} search={item}/>
+                })}
             </div>
             
         </section>
