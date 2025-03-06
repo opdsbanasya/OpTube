@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ytLogo from "../assets/yt-logo.webp";
+import ytLogo from "../assets/yt-logo.png";
 import { FiMenu } from "react-icons/fi";
 import { IoIosSearch } from 'react-icons/io';
 import { PiDotsThreeVertical } from 'react-icons/pi';
@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
 
-    const [searchQuery, setSearchSQuery] = useState("");
+    const [searchQuery, setSearchQuery] = useState("");
     const [suggestions, setSuggessions] = useState([]);
     const [showSuggessions, setShowSuggessions] = useState(false);
 
@@ -65,8 +65,8 @@ const Header = () => {
             </div>
             <div className='w-6/12 relative'>
                 <div className='w-full flex items-center'>
-                    <input type='text' placeholder='Search' className='w-8/12 px-4 py-2  border rounded-l-full outline-none '
-                        onChange={(e) => setSearchSQuery(e.target.value)}
+                    <input type='text' value={searchQuery} placeholder='Search' className='w-8/12 px-4 py-2  border rounded-l-full outline-none '
+                        onChange={(e) => setSearchQuery(e.target.value)}
                         onFocus={() => setShowSuggessions(true)}
                         onBlur={() => setShowSuggessions(false)}
                     />
@@ -77,7 +77,7 @@ const Header = () => {
                         {suggestions.map(sug => (
                             <li
                                 onClick={() => {
-                                    setSearchSQuery(sug)
+                                    setSearchQuery(sug)
                                     handleSearchPage()
                                 }}
                                 key={sug} className='flex items-center gap-2 px-4 py-1 hover:bg-gray-100 cursor-default'>
