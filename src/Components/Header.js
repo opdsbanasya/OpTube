@@ -61,7 +61,7 @@ const Header = () => {
                 <FiMenu className='text-xl cursor-pointer'
                     onClick={() => handleSidebar()}
                 />
-                <img alt="YouTube" src={ytLogo} className='w-28 object-cover cursor-pointer' />
+                <img alt="YouTube" src={ytLogo} className='w-28 object-cover cursor-pointer' onClick={()=> navigate("/")} />
             </div>
             <div className='w-6/12 relative'>
                 <div className='w-full flex items-center'>
