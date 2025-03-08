@@ -14,7 +14,7 @@ const VideoContainer = () => {
   if(!videoList) return null;
 
   return (
-    <div className={`w-fit flex flex-wrap gap-5 `}>
+    <div className={`w-fit flex flex-wrap gap-5 ${!isSidebarDisplay && "-mr-10 ml-10"}`}>
       {videoList.map(video => (
         <Video key={video?.id} video={video}/>
       ))}

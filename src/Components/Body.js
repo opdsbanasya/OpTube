@@ -13,7 +13,7 @@ const Body = () => {
     dispatch(toggleSidebar());
   }, [])
 
-  return <main className={`w-10/12 ${!isSidebarDisplay && "w-full ml-20 px-0"} min-h-screen px-3`}>
+  return <main className={`w-10/12 ${!isSidebarDisplay && "w-full mx-auto px-0"} min-h-screen px-3`}>
     <Tags />
     <VideoContainer />
   </main>
